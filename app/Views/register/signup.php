@@ -1,148 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #ffbf00;
-            --background-color: #f9f9f9;
-            --text-color: #333;
-            --border-radius: 8px;
-            --transition-duration: 0.3s;
-        }
-
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: "Roboto", sans-serif;
-            background: linear-gradient(135deg, #ffbf00 30%, #ff9b00);
-            color: var(--text-color);
-        }
-
-        .registration {
-            background-color: #fff;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 400px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        .registration h1 {
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .registration label {
-            display: block;
-            text-align: left;
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .registration input {
-            width: 100%;
-            padding: 10px 15px;
-            font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            outline: none;
-            margin-bottom: 20px;
-            transition: border-color var(--transition-duration);
-        }
-
-        .registration input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(255, 191, 0, 0.5);
-        }
-
-        .registration button {
-            width: 100%;
-            padding: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: background-color var(--transition-duration);
-        }
-
-        .registration button:hover {
-            background-color: #e0a800;
-        }
-
-        .alert {
-            text-align: left;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .registration .alert-danger {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            padding: 10px;
-            border-radius: var(--border-radius);
-        }
-
-        .registration .alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            padding: 10px;
-            border-radius: var(--border-radius);
-        }
-
-        @media (max-width: 576px) {
-            .registration {
-                padding: 30px 20px;
-            }
-
-            .registration h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
 </head>
-<body>
-    <form class="registration" action="<?= base_url('register') ?>" method="POST">
-        <?= csrf_field() ?>
+<style>
+.container{
+border-radius:10px;
+width:fit-content;
+padding: 24px;
+}
+</style>
+<body class="bg-warning ">
+    <div class="container mt-5 bg-white">
 
-        <h1>👋 Inscription</h1>
-
-        <!-- Affichage des messages d'erreur ou de succès -->
+        <!-- Display error message as red div -->
         <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('error') ?>
+            </div>
         <?php endif; ?>
+        <div class="d-flex justify-content-center align-items-center gap-3 ">
 
-        <label for="email">Adresse Email</label>
-        <!-- Affichage de l'erreur près de l'input si elle existe -->
-        <?php if (isset($validation) && $validation->getError('email')): ?>
+            <div class>
+            <img src="<?= base_url('images/image.png'); ?>" alt="Login Image" style="width: 500px; height: auto;" />
+
+            </div>
+            <div>
+            <form method="post" action="<?= base_url('register') ?>" method="POST">
+            <h1 class="text-center mb-5">Sign in</h1>
+
+                <?= csrf_field() ?>
+              
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <?php if (isset($validation) && $validation->getError('email')): ?>
             <div class="alert alert-danger"><?= $validation->getError('email') ?></div>
         <?php endif; ?>
-        <input type="email" id="email" name="email" required value="<?= old('email') ?>">
+                    <input 
+                        type="email" 
+                        class="form-control <?= session()->getFlashdata('error') ?>" 
+                        id="email" 
+                        name="email" 
+                        value="<?= old('email') ?>" 
+                        required>
+                    <!-- Error Message -->
+                    <?php if (session()->getFlashdata('email_error')): ?>
+                        <div class="invalid-feedback">
+                            <?= session()->getFlashdata('email_error') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
-        <label for="password">Mot de passe</label>
-        <!-- Affichage de l'erreur près de l'input si elle existe -->
-        <?php if (isset($validation) && $validation->getError('password')): ?>
-            <div class="alert alert-danger"><?= $validation->getError('password') ?></div>
-        <?php endif; ?>
-        <input type="password" id="password" name="password" required>
+                <!-- Password Field -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input 
+                        type="password" 
+                        class="form-control <?= session()->getFlashdata('password')?>" 
+                        id="password" 
+                        name="password" 
+                        required>
+                    <!-- Error Message -->
+                    <?php if (session()->getFlashdata('password')): ?>
+                        <div class="invalid-feedback">
+                            <?= session()->getFlashdata('password') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
-        <button type="submit">Inscription</button>
-    </form>
-    
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-dark text-white w-100">Login</button>
+            </form>
+            <p class="mt-3">
+                Vous avez pas déjà un compte ? <a href="<?= base_url('login') ?>">connectz-vous</a>
+            </p>
+            </div>
+       
+        </div>
+
+    </div>
 </body>
+
 </html>
