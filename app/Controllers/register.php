@@ -15,13 +15,12 @@ class register extends Controller
         return view('register/signup');
     }
 
-    public function signup()
-    {
+    
 
-        return view('register/signup');
-    }
+public function signup(){
+    return view('register/signup');
 
-
+}
      public function store()
     {
         helper(['form']);
@@ -37,6 +36,7 @@ class register extends Controller
             'password' => 'required|min_length[6]',
         ];
     
+        
         if ($this->validate($rules)) {
             // Récupérer les données du formulaire
             $email = $this->request->getPost('email');
