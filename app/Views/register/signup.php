@@ -143,5 +143,6 @@
 
         <button type="submit">Inscription</button>
     </form>
+    
 </body>
 </html>

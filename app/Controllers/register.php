@@ -15,7 +15,14 @@ class register extends Controller
         return view('register/signup');
     }
 
-    public function store()
+    public function signup()
+    {
+
+        return view('register/signup');
+    }
+
+
+     public function store()
     {
         helper(['form']);
         $session = session();
