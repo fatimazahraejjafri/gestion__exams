@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\CompteModel;
+use App\Models\RoleModel;
 
 class Login extends Controller
 {
@@ -18,6 +19,7 @@ class Login extends Controller
         helper(['form']);
         $session = session();
         $model = new CompteModel();
+        $roleModel = new RoleModel();
 
 
         $email = $this->request->getPost('email');
@@ -29,6 +31,9 @@ class Login extends Controller
         if ($user) {
 
             if (password_verify($password, $user['password'])) {
+                // Retrieve role information
+                $role = $roleModel->find($user['id_user']);
+
 
                 $sessionData = [
                     'id'        => $user['id_compte'],
@@ -39,7 +44,12 @@ class Login extends Controller
                 $session->setFlashdata('success', 'Connexion réussie.');
 
 
-                return redirect()->to('/dashboard');
+                // Redirect based on role
+                if ($role['name'] === 'prof') {
+                    return redirect()->to('/dashboard');
+                } else {
+                    return redirect()->to('/etudiant');
+                }
             } else {
                 $session->setFlashdata('error', 'Email ou mot de passe invalide.');
             }
@@ -47,18 +57,25 @@ class Login extends Controller
             $session->setFlashdata('error', 'Utilisateur non trouvé.');
         }
 
-
         return redirect()->to('/login');
     }
 
     public function dashboard()
     {
-
-        if (!session()->get('logged_in')) {
+        if (!session()->get('logged_in') || session()->get('role') !== 'prof') {
             return redirect()->to('/login');
         }
 
-        return view('auth/dashboard');
+        return view('dashboard'); // Replace with the actual view file for the professor dashboard
+    }
+
+    public function etudiant()
+    {
+        if (!session()->get('logged_in') || session()->get('role') !== 'etudiant') {
+            return redirect()->to('/login');
+        }
+
+        return view('etudiant'); // Replace with the actual view file for the student dashboard
     }
 
     public function logout()
