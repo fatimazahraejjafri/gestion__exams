@@ -31,7 +31,7 @@ padding: 24px;
             </div>
             <div>
             <form method="post" action="<?= base_url('register') ?>" method="POST">
-            <h1 class="text-center mb-5">Sign in</h1>
+            <h1 class="text-center mb-5">Sign Up</h1>
 
                 <?= csrf_field() ?>
               
@@ -75,7 +75,7 @@ padding: 24px;
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-dark text-white w-100">Login</button>
+                <button type="submit" class="btn btn-dark text-white w-100">Submit</button>
             </form>
             <p class="mt-3">
                 Vous avez pas déjà un compte ? <a href="<?= base_url('login') ?>">connectz-vous</a>
