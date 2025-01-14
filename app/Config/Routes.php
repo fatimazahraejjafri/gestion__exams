@@ -20,7 +20,9 @@ $routes->get('etudiant', 'Login::etudiant'); // Displays the student dashboard
 $routes->get('filiere/getFilieresByProf/(:num)', 'FiliereController::getFilieresByProf/$1');
 $routes->get('module/getModulesByFiliereAndProf/(:num)/(:num)', 'ModuleController::getModulesByFiliereAndProf/$1/$2');
 $routes->get('etudiant/getStudentsByFiliere/(:num)', 'EtudiantController::getStudentsByFiliere/$1');
+$routes->get('etudiant/getStudentsByFiliereAndModule/(:num)/(:num)', 'EtudiantController::getStudentsByFiliereAndModule/$1/$2');
 
+$routes->post('insertGrades', 'NoteController::insertGrades');
 $routes->post('importExcel', 'NoteController::insertGradesFromExcel');
 
 

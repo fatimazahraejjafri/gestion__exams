@@ -107,6 +107,9 @@
     .hidden {
       display: none;
     }
+    #studentsContainer button{
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -313,24 +316,54 @@
 
   // Load students for manual form
   async function loadStudents() {
+    const filiereId = document.getElementById('filiere').value;
     const moduleId = document.getElementById('module').value;
-    if (!moduleId) return;
-    const response = await fetch(`<?= base_url("etudiant/getStudentsByFiliere") ?>/${moduleId}`);
-    const students = await response.json();
-    const studentTable = document.getElementById('studentsTable');
-    studentTable.innerHTML = '';
-    students.forEach(student => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${student.id_user}</td>
-        <td>${student.last_name}</td>
-        <td>${student.first_name}</td>
-        <td><input type="number" name="grades[${student.id_user}]" min="0" max="20" step="0.5" required></td>
-      `;
-      studentTable.appendChild(row);
-    });
-    document.getElementById('studentsContainer').classList.remove('hidden');
-  }
+
+    if (!filiereId || !moduleId) {
+        alert('Veuillez sélectionner une filière et un module avant de charger les étudiants.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`<?= base_url("etudiant/getStudentsByFiliereAndModule") ?>/${filiereId}/${moduleId}`);
+        const students = await response.json();
+        const studentTable = document.getElementById('studentsTable');
+        studentTable.innerHTML = ''; // Clear the table
+
+        let allNotesExist = true; // Flag to check if all notes exist
+
+        students.forEach(student => {
+            const noteExists = student.grade !== null; // Check if grade exists
+            if (!noteExists) allNotesExist = false; // If any grade is missing, set flag to false
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${student.id_user}</td>
+                <td>${student.last_name}</td>
+                <td>${student.first_name}</td>
+                <td>
+                    <input type="number" name="grades[${student.id_user}]" 
+                           value="${student.grade !== null ? student.grade : ''}" 
+                           min="0" max="20" step="0.5" 
+                           ${noteExists ? 'disabled' : ''}>
+                </td>
+            `;
+            studentTable.appendChild(row);
+        });
+
+        // Show or hide the "Enregistrer les Notes" button
+        const submitButton = document.querySelector('#studentsContainer button');
+        if (allNotesExist) {
+            submitButton.style.display = 'none'; // Hide the button if all notes exist
+        } else {
+            submitButton.style.display = 'block'; // Show the button if there are missing notes
+        }
+
+        document.getElementById('studentsContainer').classList.remove('hidden'); // Show the student section
+    } catch (error) {
+        console.error('Erreur lors de la récupération des étudiants :', error);
+    }
+}
 
   // Submit grades (manual form)
   async function submitGrades() {
