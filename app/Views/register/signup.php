@@ -74,6 +74,28 @@ padding: 24px;
                     <?php endif; ?>
                 </div>
 
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First name</label>
+                    <input 
+                        type="first_name" 
+                        class="form-control <?= session()->getFlashdata('first_name')?>" 
+                        id="first_name" 
+                        name="first_name" 
+                        required>
+                    
+                </div>
+
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last name</label>
+                    <input 
+                        type="last_name" 
+                        class="form-control <?= session()->getFlashdata('last_name')?>" 
+                        id="last_name" 
+                        name="last_name" 
+                        required>
+                    <!-- Error Message -->
+                   
+
                 <!-- Submit Button -->
                 <button type="submit" class="btn btn-dark text-white w-100">Submit</button>
             </form>

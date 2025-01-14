@@ -31,8 +31,7 @@ padding: 24px;
             </div>
             <div>
             <form method="post" action="<?= base_url('login') ?>">
-            <h1 class="text-center mb-5">Sign in</h1>
-
+            <h1 class="text-center mb-5">login</h1>
                 <?= csrf_field() ?>
 
                 <!-- Email Field -->
