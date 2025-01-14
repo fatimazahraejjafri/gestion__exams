@@ -18,7 +18,7 @@
     /* Sidebar styles */
     .sidebar {
       width: 250px;
-      background-color:rgb(69, 120, 172);
+      background-color: #2c3e50;
       color: white;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -113,41 +113,44 @@
   <div class="dashboard">
     <!-- Barre latérale -->
     <aside class="sidebar">
-      <img src="homme.png" alt="Maroc Image" style="width: 50%; height: auto; display: block; margin: auto;" />
+      <img src="<?= base_url('images/homme.png'); ?>" alt="Maroc Image" style="width: 50%; height: auto; display: block; margin: auto;" />
       <ul>
         <li><a href="#saisir-notes" class="active">Saisir des Notes</a></li>
         <li><a href="#mes-classes">Mes Classes</a></li>
         <li><a href="#statistiques">Statistiques</a></li>
-        <li><a href="#deconnexion">Déconnexion</a></li>
+        <li><a href="/login/logout">Déconnexion</a></li>
       </ul>
     </aside>
     <!-- Contenu principal -->
     <main class="main-content">
-      <header>
+    <header>
+    <?php if (isset($professor) && $professor): ?>
+        <h1>Bienvenue, Professeur <?= esc($professor['first_name']) . ' ' . esc($professor['last_name']) ?></h1>
+    <?php else: ?>
         <h1>Bienvenue, Professeur</h1>
-        <p>Sélectionnez une option dans le menu pour commencer.</p>
-      </header>
-      <!-- Section : Saisir des Notes -->
-      <section id="saisir-notes">
+        <p>Impossible de récupérer les informations du professeur.</p>
+    <?php endif; ?>
+    <p>Sélectionnez une option dans le menu pour commencer.</p>
+    </header>
+    <section id="saisir-notes">
         <h2>Saisir des Notes</h2>
         <form id="noteForm">
-          <label for="department">Département :</label>
+        <label for="department">Département :</label>
           <select id="department" name="department">
             <option value="" disabled selected>Choisissez un département</option>
             <option value="informatique">Informatique</option>
           </select>
           <label for="filiere">Filière :</label>
-          <select id="filiere" name="filiere" disabled>
+          <select id="filiere" name="filiere" disabled onchange="loadModules()">
             <option value="" disabled selected>Choisissez une filière</option>
           </select>
           <label for="module">Module :</label>
           <select id="module" name="module" disabled>
             <option value="" disabled selected>Choisissez un module</option>
           </select>
-          <button type="button" id="loadStudents" disabled>Charger les Étudiants</button>
+          <button type="button" id="loadStudents" disabled onclick="loadStudentsForModule()">Charger les Étudiants</button>
         </form>
-        <!-- Liste des étudiants -->
-        <div class="student-list hidden" id="studentSection">
+        <div id="studentSection" class="hidden">
           <h3>Liste des Étudiants</h3>
           <table>
             <thead>
@@ -163,75 +166,82 @@
           <button type="button" id="submitNotes">Enregistrer les Notes</button>
         </div>
       </section>
-    </main>
+ </main>
   </div>
   <script>
-    const departmentSelect = document.getElementById("department");
-    const filiereSelect = document.getElementById("filiere");
-    const moduleSelect = document.getElementById("module");
-    const loadStudentsButton = document.getElementById("loadStudents");
-    const studentSection = document.getElementById("studentSection");
-    const studentTable = document.getElementById("studentTable");
-    // Mock data for filieres and modules
-    const filieres = {
-      informatique: ["Genie logicielle", "Intelligence artificielle"],
-    };
-    const modules = {
-      "genie logicielle": ["Algorithmique", "Architecture des ordinateurs"],
-      "intelligence artificiel": ["Apprentissage automatique", "Traitement du langage naturel"],
-    };
-    // Activer les filières dynamiquement
-    departmentSelect.addEventListener("change", () => {
-      const department = departmentSelect.value;
-      filiereSelect.innerHTML = <option value="" disabled selected>Choisissez une filière</option>;
-      if (filieres[department]) {
-        filieres[department].forEach((filiere) => {
-          const option = document.createElement("option");
-          option.value = filiere.toLowerCase();
-          option.textContent = filiere;
-          filiereSelect.appendChild(option);
+    
+    const professorId = <?= json_encode(session()->get('user_id')) ?>; // Get user_id from session
+
+    document.getElementById('department').addEventListener('change', () => {
+    const department = document.getElementById('department').value;
+    const filiereSelect = document.getElementById('filiere');
+
+    if (department === 'informatique') {
+        filiereSelect.disabled = false; // Enable Filière dropdown
+        loadFilieres(); // Load filieres dynamically
+    } else {
+        filiereSelect.disabled = true; // Disable Filière dropdown for other departments
+        filiereSelect.innerHTML = '<option value="" disabled selected>Choisissez une filière</option>'; // Reset options
+    }
+});
+
+
+    async function loadFilieres() {
+        const response = await fetch(`<?= base_url("filiere/getFilieresByProf") ?>/${professorId}`);
+        const filieres = await response.json();
+        const filiereSelect = document.getElementById('filiere');
+        filiereSelect.innerHTML = '<option value="" disabled selected>Choisissez une filière</option>';
+        filieres.forEach(filiere => {
+            const option = document.createElement('option');
+            option.value = filiere.id_filiere;
+            option.textContent = filiere.name;
+            filiereSelect.appendChild(option);
         });
-        filiereSelect.disabled = false;
-      }
-    });
-    // Activer les modules dynamiquement en fonction de la filière
-    filiereSelect.addEventListener("change", () => {
-      const filiere = filiereSelect.value;
-      moduleSelect.innerHTML = <option value="" disabled selected>Choisissez un module</option>;
-      if (modules[filiere]) {
-        modules[filiere].forEach((module) => {
-          const option = document.createElement("option");
-          option.value = module.toLowerCase();
-          option.textContent = module;
-          moduleSelect.appendChild(option);
+    }
+
+    async function loadModules() {
+        const idFiliere = document.getElementById('filiere').value;
+        const response = await fetch(`<?= base_url("module/getModulesByFiliereAndProf") ?>/${idFiliere}/${professorId}`);
+        const modules = await response.json();
+        const moduleSelect = document.getElementById('module');
+        moduleSelect.innerHTML = '<option value="" disabled selected>Choisissez un module</option>';
+        modules.forEach(module => {
+            const option = document.createElement('option');
+            option.value = module.id_module;
+            option.textContent = module.name;
+            moduleSelect.appendChild(option);
         });
         moduleSelect.disabled = false;
-      }
-      loadStudentsButton.disabled = false;
-    });
-    // Activer le bouton pour charger les étudiants
-    moduleSelect.addEventListener("change", () => {
-      loadStudentsButton.disabled = false;
-    });
-    loadStudentsButton.addEventListener("click", () => {
-      studentSection.classList.remove("hidden");
-      studentTable.innerHTML = "";
-      const students = [
-        { id: 1, nom: " ", prenom: " " },
-        { id: 2, nom: " ", prenom: " " },
-        { id: 3, nom: " ", prenom: " " },
-      ];
-      students.forEach((student) => {
-        const row = document.createElement("tr");
+        document.getElementById('loadStudents').disabled = false;
+    }
+
+
+    async function loadStudentsForModule(){
+      const idFiliere = document.getElementById('filiere').value;
+      if (!idFiliere) {
+        alert('Veuillez sélectionner une filière avant de charger les étudiants.');
+        return;
+    }
+    const response = await fetch(`<?= base_url("etudiant/getStudentsByFiliere") ?>/${idFiliere}`);
+    const students = await response.json();
+    const studentTable = document.getElementById('studentTable');
+    studentTable.innerHTML = '';
+    students.forEach(user => {
+        const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${student.id}</td>
-          <td>${student.nom}</td>
-          <td>${student.prenom}</td>
-          <td><input type="number" name="note" min="0" max="20" step="0.5"></td>
+            <td>${user.id_user}</td>
+            <td>${user.last_name}</td>
+            <td>${user.first_name}</td>
+            <td><input type="number" name="note" min="0" max="20" step="0.5"></td>
         `;
         studentTable.appendChild(row);
-      });
     });
-  </script>
+    document.getElementById('studentSection').classList.remove('hidden');
+    }
+
+
+    document.addEventListener('DOMContentLoaded', loadFilieres);
+</script>
+
 </body>
 </html>
