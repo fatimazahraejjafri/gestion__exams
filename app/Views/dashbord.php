@@ -111,7 +111,7 @@
 </head>
 <body>
   <div class="dashboard">
-    <!-- Barre latérale -->
+    <!-- Sidebar -->
     <aside class="sidebar">
       <img src="<?= base_url('images/homme.png'); ?>" alt="Maroc Image" style="width: 50%; height: auto; display: block; margin: auto;" />
       <ul>
@@ -121,127 +121,169 @@
         <li><a href="/login/logout">Déconnexion</a></li>
       </ul>
     </aside>
-    <!-- Contenu principal -->
+    <!-- Main Content -->
     <main class="main-content">
-    <header>
-    <?php if (isset($professor) && $professor): ?>
-        <h1>Bienvenue, Professeur <?= esc($professor['first_name']) . ' ' . esc($professor['last_name']) ?></h1>
-    <?php else: ?>
-        <h1>Bienvenue, Professeur</h1>
-        <p>Impossible de récupérer les informations du professeur.</p>
-    <?php endif; ?>
-    <p>Sélectionnez une option dans le menu pour commencer.</p>
-    </header>
-    <section id="saisir-notes">
+      <header>
+        <?php if (isset($professor) && $professor): ?>
+          <h1>Bienvenue, Professeur <?= esc($professor['first_name']) . ' ' . esc($professor['last_name']) ?></h1>
+        <?php else: ?>
+          <h1>Bienvenue, Professeur</h1>
+          <p>Impossible de récupérer les informations du professeur.</p>
+        <?php endif; ?>
+        <p>Sélectionnez une option dans le menu pour commencer.</p>
+      </header>
+      <section id="saisir-notes">
         <h2>Saisir des Notes</h2>
-        <form id="noteForm">
-        <label for="department">Département :</label>
-          <select id="department" name="department">
-            <option value="" disabled selected>Choisissez un département</option>
-            <option value="informatique">Informatique</option>
-          </select>
+        <form id="noteForm" method="post" action="<?= base_url('insertGrades') ?>">
           <label for="filiere">Filière :</label>
-          <select id="filiere" name="filiere" disabled onchange="loadModules()">
+          <select id="filiere" name="filiere" required>
             <option value="" disabled selected>Choisissez une filière</option>
+            <!-- Dynamically filled by JavaScript -->
           </select>
           <label for="module">Module :</label>
-          <select id="module" name="module" disabled>
+          <select id="module" name="module" required>
             <option value="" disabled selected>Choisissez un module</option>
+            <!-- Dynamically filled by JavaScript -->
           </select>
-          <button type="button" id="loadStudents" disabled onclick="loadStudentsForModule()">Charger les Étudiants</button>
+          <div id="studentsContainer" class="hidden">
+            <h3>Étudiants</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTable">
+                <!-- Dynamically filled by JavaScript -->
+              </tbody>
+            </table>
+            <button type="button" onclick="submitGrades()">Enregistrer les Notes</button>
+          </div>
         </form>
-        <div id="studentSection" class="hidden">
-          <h3>Liste des Étudiants</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Note</th>
-              </tr>
-            </thead>
-            <tbody id="studentTable"></tbody>
-          </table>
-          <button type="button" id="submitNotes">Enregistrer les Notes</button>
-        </div>
       </section>
- </main>
+    </main>
   </div>
+
   <script>
-    
-    const professorId = <?= json_encode(session()->get('user_id')) ?>; // Get user_id from session
-
-    document.getElementById('department').addEventListener('change', () => {
-    const department = document.getElementById('department').value;
-    const filiereSelect = document.getElementById('filiere');
-
-    if (department === 'informatique') {
-        filiereSelect.disabled = false; // Enable Filière dropdown
-        loadFilieres(); // Load filieres dynamically
-    } else {
-        filiereSelect.disabled = true; // Disable Filière dropdown for other departments
-        filiereSelect.innerHTML = '<option value="" disabled selected>Choisissez une filière</option>'; // Reset options
-    }
-});
-
+    const professorId = <?= json_encode(session()->get('user_id')) ?>;
 
     async function loadFilieres() {
-        const response = await fetch(`<?= base_url("filiere/getFilieresByProf") ?>/${professorId}`);
-        const filieres = await response.json();
-        const filiereSelect = document.getElementById('filiere');
-        filiereSelect.innerHTML = '<option value="" disabled selected>Choisissez une filière</option>';
-        filieres.forEach(filiere => {
-            const option = document.createElement('option');
-            option.value = filiere.id_filiere;
-            option.textContent = filiere.name;
-            filiereSelect.appendChild(option);
-        });
+      const response = await fetch(`<?= base_url("filiere/getFilieresByProf") ?>/${professorId}`);
+      const filieres = await response.json();
+      const filiereSelect = document.getElementById('filiere');
+      filiereSelect.innerHTML = '<option value="" disabled selected>Choisissez une filière</option>';
+      filieres.forEach(filiere => {
+        const option = document.createElement('option');
+        option.value = filiere.id_filiere;
+        option.textContent = filiere.name;
+        filiereSelect.appendChild(option);
+      });
     }
 
     async function loadModules() {
-        const idFiliere = document.getElementById('filiere').value;
-        const response = await fetch(`<?= base_url("module/getModulesByFiliereAndProf") ?>/${idFiliere}/${professorId}`);
-        const modules = await response.json();
-        const moduleSelect = document.getElementById('module');
-        moduleSelect.innerHTML = '<option value="" disabled selected>Choisissez un module</option>';
-        modules.forEach(module => {
-            const option = document.createElement('option');
-            option.value = module.id_module;
-            option.textContent = module.name;
-            moduleSelect.appendChild(option);
-        });
-        moduleSelect.disabled = false;
-        document.getElementById('loadStudents').disabled = false;
+      const filiereId = document.getElementById('filiere').value;
+      if (!filiereId) return;
+      const response = await fetch(`<?= base_url("module/getModulesByFiliereAndProf") ?>/${filiereId}/${professorId}`);
+      const modules = await response.json();
+      const moduleSelect = document.getElementById('module');
+      moduleSelect.innerHTML = '<option value="" disabled selected>Choisissez un module</option>';
+      modules.forEach(module => {
+        const option = document.createElement('option');
+        option.value = module.id_module;
+        option.textContent = module.name;
+        moduleSelect.appendChild(option);
+      });
     }
 
-
-    async function loadStudentsForModule(){
-      const idFiliere = document.getElementById('filiere').value;
-      if (!idFiliere) {
-        alert('Veuillez sélectionner une filière avant de charger les étudiants.');
-        return;
-    }
-    const response = await fetch(`<?= base_url("etudiant/getStudentsByFiliere") ?>/${idFiliere}`);
-    const students = await response.json();
-    const studentTable = document.getElementById('studentTable');
-    studentTable.innerHTML = '';
-    students.forEach(user => {
+    async function loadStudents() {
+      const moduleId = document.getElementById('module').value;
+      if (!moduleId) return;
+      const response = await fetch(`<?= base_url("etudiant/getStudentsByFiliere") ?>/${moduleId}`);
+      const students = await response.json();
+      const studentTable = document.getElementById('studentsTable');
+      studentTable.innerHTML = '';
+      students.forEach(student => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${user.id_user}</td>
-            <td>${user.last_name}</td>
-            <td>${user.first_name}</td>
-            <td><input type="number" name="note" min="0" max="20" step="0.5"></td>
+          <td>${student.id_user}</td>
+          <td>${student.last_name}</td>
+          <td>${student.first_name}</td>
+          <td><input type="number" name="grades[${student.id_user}]" min="0" max="20" step="0.5" required></td>
         `;
         studentTable.appendChild(row);
-    });
-    document.getElementById('studentSection').classList.remove('hidden');
+      });
+      document.getElementById('studentsContainer').classList.remove('hidden');
     }
 
+async function submitGrades() {
+  const moduleId = document.getElementById('module').value;
+  const gradeInputs = document.querySelectorAll('input[name^="grades"]');
+  
+  let grades = [];
+  let isValid = true;
+
+  // Validation des notes et préparation des données à envoyer
+  gradeInputs.forEach(input => {
+    const studentId = input.name.match(/\d+/)[0]; // Extraire l'id de l'étudiant à partir du nom du champ
+    const grade = input.value;
+    
+    if (grade && (grade < 0 || grade > 20)) {
+      isValid = false;
+      alert(`La note pour l'étudiant ${studentId} est invalide. Les notes doivent être entre 0 et 20.`);
+      return;
+    }
+    
+    if (grade) {
+      grades.push({
+        id_user: studentId,
+        grade: grade
+      });
+    }
+  });
+
+  // Si les données sont invalides, on arrête l'exécution
+  if (!isValid) {
+    return;
+  }
+
+  // Vérification qu'il y a au moins une note à envoyer
+  if (grades.length === 0) {
+    alert('Veuillez entrer des notes pour les étudiants.');
+    return;
+  }
+
+  // Envoi des données
+  const formData = new FormData();
+  formData.append('id_module', moduleId);
+  formData.append('grades', JSON.stringify(grades)); // Passer les données sous forme de JSON
+
+  try {
+    const response = await fetch('<?= base_url("insertGrades") ?>', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert('Les notes ont été enregistrées avec succès !');
+    } else {
+      alert('Une erreur est survenue lors de l\'enregistrement des notes.');
+    }
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi des données :', error);
+    alert('Une erreur est survenue lors de l\'enregistrement des notes.');
+  }
+}
+
+
+    document.getElementById('filiere').addEventListener('change', loadModules);
+    document.getElementById('module').addEventListener('change', loadStudents);
 
     document.addEventListener('DOMContentLoaded', loadFilieres);
-</script>
-
+  </script>
 </body>
 </html>
