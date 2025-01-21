@@ -27,3 +27,5 @@ $routes->post('importExcel', 'NoteController::insertGradesFromExcel');
 
 
 $routes->get('login/logout', 'Login::logout');
+
+$routes->get('/notes', 'NoteController::showStudentGradesView');

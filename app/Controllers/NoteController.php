@@ -13,6 +13,19 @@ class NoteController extends Controller
     {
         $this->noteModel = new NoteModel();
     }
+    public function showStudentGradesView()
+{
+    $session = session();
+    if (!$session->has('user_id')) {
+        return redirect()->to('/login'); // Redirige vers la page de connexion si non connecté
+    }
+
+    $studentId = $session->get('user_id'); // Récupère l'ID de l'étudiant depuis la session
+    $grades = $this->noteModel->where('id_user', $studentId)->findAll();
+
+    return view('student_grades', ['grades' => $grades]);
+}
+
 
     public function insertGrades()
     {

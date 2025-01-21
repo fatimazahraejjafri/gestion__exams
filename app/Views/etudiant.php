@@ -50,7 +50,7 @@
             <!-- Sidebar -->
             <nav class="col-md-2 sidebar">
                  <a href="#">Vue d'ensemble</a>
-                <a href="#">Mes Notes</a>
+                <a href="/notes">Mes Notes</a>
                 <a href="#">Réclamations</a>
                 <a href="#">Calendrier</a>
                 <a href="#">Ressources</a>
