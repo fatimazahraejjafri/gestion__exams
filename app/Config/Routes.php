@@ -18,4 +18,6 @@ $routes->get('dashboard', 'Login::dashboard'); // Displays the professor dashboa
 $routes->get('etudiant', 'Login::etudiant'); // Displays the student dashboard
 
 $routes->get('logout', 'Login::logout');
+$routes->get('reclamation', 'Login::reclamation'); // Displays the student dashboard
+$routes->get('reclamation_prof', 'Login::reclamation_prof'); // Displays the student dashboard
 

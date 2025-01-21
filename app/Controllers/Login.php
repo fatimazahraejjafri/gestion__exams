@@ -98,4 +98,20 @@ class Login extends Controller
         $session->destroy();
         return redirect()->to('/login');
     }
+
+    
+    public function reclamation()
+    {
+        
+
+        return view('reclamation'); // Replace with the actual view file for the student dashboard
+    }
+
+    public function reclamation_prof()
+    {
+        
+
+        return view('reclamation_prof'); // Replace with the actual view file for the student dashboard
+    }
+
 }
