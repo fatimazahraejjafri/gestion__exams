@@ -6,12 +6,12 @@ use CodeIgniter\Controller;
 use App\Models\CompteModel;
 use App\Models\RoleModel;
 use App\Models\UserModel;
+use App\Models\FiliereModel;
 
 class Login extends Controller
 {
     public function index()
     {
-
         return view('login/login');
     }
 
@@ -22,7 +22,8 @@ class Login extends Controller
         $model = new CompteModel();
         $roleModel = new RoleModel();
         $userModel = new UserModel();  // Add model to access the 'user' table
-    
+
+
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
     
@@ -40,12 +41,13 @@ class Login extends Controller
                     $role = $roleModel->where('id_role', $userInfo['id_role'])->first();  // Look up role by id_role
     
                     if ($role) {
-                        // Set session data including role information
+                        // Set session data including role information and user_id
                         $sessionData = [
                             'id'        => $user['id_compte'],
                             'email'     => $user['email'],
                             'role'      => $role['name'],  // Replace 'name' with the correct column name from the 'role' table
                             'user_id'   => $user['id_user'],  // Store user_id here to access it later
+                            'id_filiere' => $userInfo['id_filiere'], // Add filiere info
                             'logged_in' => true
                         ];
                         $session->set($sessionData);
@@ -55,7 +57,7 @@ class Login extends Controller
                         if ($role['name'] === 'prof') {  // Replace 'name' with the correct column name
                             return redirect()->to('/dashbord');
                         } else {
-                            return redirect()->to('/etudiant');
+                            return redirect()->to('/accueil');
                         }
                     } else {
                         $session->setFlashdata('error', 'Rôle utilisateur introuvable.');
@@ -72,8 +74,6 @@ class Login extends Controller
     
         return redirect()->to('/login');
     }
-    
-    
 
     public function dashboard()
     {
@@ -98,9 +98,60 @@ class Login extends Controller
         if (!session()->get('logged_in') || session()->get('role') !== 'etudiant') {
             return redirect()->to('/login');
         }
-
-        return view('etudiant'); // Replace with the actual view file for the student dashboard
+    
+        // Retrieve student information from the user table using user_id
+        $userModel = new UserModel();
+        $student = $userModel->where('id_user', session()->get('user_id'))->first();
+    
+        if (!$student) {
+            return redirect()->to('/login');
+        }
+    
+        // Pass student information to the view
+        return view('dachboard_etudiant/accueil', ['student' => $student]);
     }
+    
+    public function reclamation()
+{
+    if (!session()->get('logged_in') || session()->get('role') !== 'etudiant') {
+        return redirect()->to('/login');
+    }
+
+    // Retrieve student information from the user and compte tables
+    $userModel = new UserModel();
+    $compteModel = new CompteModel();
+    $filiereModel = new FiliereModel(); // Load FiliereModel to fetch filière name
+
+    // Get the student information from the user table
+    $student = $userModel->where('id_user', session()->get('user_id'))->first();
+
+    if (!$student) {
+        return redirect()->to('/login');
+    }
+
+    // Fetch the email from the compte table using the id_user
+    $compte = $compteModel->where('id_user', session()->get('user_id'))->first();
+
+    if ($compte) {
+        $student['email'] = $compte['email']; // Add the email to the student data
+    } else {
+        $student['email'] = ''; // If no email is found, set it to an empty string
+    }
+
+    // Fetch the filière name using id_filiere from the student data
+    $filiere = $filiereModel->where('id_filiere', $student['id_filiere'])->first();
+
+    if ($filiere) {
+        $student['filiere_name'] = $filiere['name']; // Add the filière name to the student data
+    } else {
+        $student['filiere_name'] = 'Non défini'; // Set a default value if no filière is found
+    }
+
+    // Pass student information to the view
+    return view('reclamation', ['student' => $student]);
+}
+
+    
 
     public function logout()
     {
@@ -109,19 +160,33 @@ class Login extends Controller
         return redirect()->to('/login');
     }
 
-    
-    public function reclamation()
-    {
-        
-
-        return view('reclamation'); // Replace with the actual view file for the student dashboard
-    }
-
     public function reclamation_prof()
+{
+    $session = session();
+
+    // Ensure professor is logged in
+    if (!$session->get('user_id') || $session->get('role') !== 'prof') {
+        return redirect()->to('/login');
+    }
+
+    $professorId = $session->get('user_id'); // Get professor's ID from the session
+
+    // Fetch reclamations related to the professor
+    $reclamationModel = new \App\Models\ReclamationModel();
+    $reclamations = $reclamationModel->getReclamationsByProfessorsAndModules($professorId);
+
+    // Store reclamations in session
+    $session->set('reclamations', $reclamations);
+
+    // Pass the reclamations to the view
+    return view('reclamation_prof', ['reclamations' => $session->get('reclamations')]);
+}
+
+
+    public function accueil()
     {
         
 
-        return view('reclamation_prof'); // Replace with the actual view file for the student dashboard
+        return view('dachboard_etudiant/accueil'); 
     }
-
 }

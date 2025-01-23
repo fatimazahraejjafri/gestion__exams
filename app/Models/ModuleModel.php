@@ -14,5 +14,16 @@ class ModuleModel extends Model {
                     ->where('id_user', $idUser)
                     ->findAll();
     }
+
+    public function getModulesByFiliere() {
+        $session = session();
+        $filiereId = $session->get('id_filiere');
+
+        $moduleModel = new ModuleModel();
+        $modules = $moduleModel->where('id_filiere', $filiereId)->findAll();
+
+        return $this->response->setJSON($modules);
+}
+
 }
 

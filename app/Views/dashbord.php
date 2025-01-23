@@ -118,9 +118,8 @@
     <aside class="sidebar">
       <img src="<?= base_url('images/homme.png'); ?>" alt="Maroc Image" style="width: 50%; height: auto; display: block; margin: auto;" />
       <ul>
-        <li><a href="#saisir-notes" class="active">Saisir des Notes</a></li>
-        <li><a href="#mes-classes">Mes Classes</a></li>
-        <li><a href="#statistiques">Statistiques</a></li>
+      <li><a href="dashbord" class="active">Saisir des Notes</a></li>
+        <li><a href="reclamation_prof">Reclamation</a></li>
         <li><a href="/login/logout">Déconnexion</a></li>
       </ul>
     </aside>

@@ -212,11 +212,10 @@ table tbody tr td:last-child {
   <div class="dashboard">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <img src="<?= base_url('images/homme'); ?>" alt="Maroc Image" style="width: 50%; height: auto; display: block; margin: auto;" />
+      <img src="<?= base_url('images/homme.png'); ?>" alt="Maroc Image" style="width: 50%; height: auto; display: block; margin: auto;" />
       <ul>
-        <li><a href="#saisir-notes" class="active">Saisir des Notes</a></li>
-        <li><a href="#mes-classes">Mes Classes</a></li>
-        <li><a href="#statistiques">Statistiques</a></li>
+        <li><a href="dashbord">Saisir des Notes</a></li>
+        <li><a href="reclamation_prof" class="active">Reclamation</a></li>
         <li><a href="/login/logout">Déconnexion</a></li>
       </ul>
     </aside>
@@ -239,126 +238,63 @@ table tbody tr td:last-child {
 
                     <!-- Table -->
                     <div class="overflow-x-auto">
-                        <table class="table-auto w-full">
-                            <!-- Table header -->
-                            <thead class="text-[13px] text-slate-500/70">
-                                <tr>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">#</div>
-                                    </th>                                        
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">NOM ETUDIANT *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">PRENOM ETUDIANT *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">EMAIL *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">CNE *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">FILERE *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">MODULE *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left">RECLAMATION *</div>
-                                    </th>
-                                    <th class="px-5 py-2 first:pl-3 last:pr-3 bg-slate-100 first:rounded-l last:rounded-r last:pl-5 last:sticky last:right-0">
-                                        <div class="font-medium text-left sr-only">ETAT *</div>
-                                    </th>                                        
-                                </tr>
-                            </thead>
-                            <!-- Table body -->
-                            <tbody class="text-sm font-medium">
-                            <!-- Row -->
-                                <tr>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-500">1</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="flex items-center">
-                                            <svg class="shrink-0 mr-2 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                                                <path fill="#fff" d="M24.563 16.236c.282-1.891-1.157-2.908-3.127-3.586l.64-2.562-1.56-.389-.622 2.495c-.41-.103-.831-.199-1.25-.294l.627-2.511L17.71 9l-.638 2.561c-.34-.077-.673-.153-.996-.234l.002-.008-2.15-.537-.416 1.666s1.157.265 1.133.281c.631.158.746.576.727.907l-.728 2.92c.044.01.1.026.162.051-.052-.013-.107-.027-.165-.04l-1.02 4.088c-.077.192-.273.48-.714.37.016.023-1.134-.282-1.134-.282L11 22.528l2.03.506c.377.095.747.194 1.112.287l-.646 2.591 1.558.389.639-2.564c.426.116.839.222 1.243.323l-.637 2.551 1.56.389.645-2.587c2.66.504 4.659.3 5.5-2.105.679-1.936-.033-3.053-1.432-3.782 1.019-.235 1.787-.905 1.991-2.29Zm-3.564 4.997c-.482 1.936-3.742.89-4.8.627l.857-3.433c1.057.264 4.447.786 3.943 2.806Zm.483-5.025c-.44 1.762-3.154.867-4.034.647l.776-3.113c.88.219 3.716.629 3.258 2.466Z"/>
-                                            </svg>
-                                            <div class="text-slate-900"></div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-500">Fati</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-900">ja</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-900"></div>nassima.etudiant@gmail.com
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-emerald-500">M1......</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-emerald-500">IL</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-red-500">DT</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                      <select class="action-select">
-                                        <option value="en-cours" selected>En cours</option>
-                                        <option value="accepter">Accepter</option>
-                                        <option value="refuser">Refuser</option>
-                                      </select>
-                                    </td>
-
-                                </tr>
-                              
-                                <tr>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-500">2</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="flex items-center">
-                                            <svg class="shrink-0 mr-2 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                                                <path fill="#fff" d="M24.563 16.236c.282-1.891-1.157-2.908-3.127-3.586l.64-2.562-1.56-.389-.622 2.495c-.41-.103-.831-.199-1.25-.294l.627-2.511L17.71 9l-.638 2.561c-.34-.077-.673-.153-.996-.234l.002-.008-2.15-.537-.416 1.666s1.157.265 1.133.281c.631.158.746.576.727.907l-.728 2.92c.044.01.1.026.162.051-.052-.013-.107-.027-.165-.04l-1.02 4.088c-.077.192-.273.48-.714.37.016.023-1.134-.282-1.134-.282L11 22.528l2.03.506c.377.095.747.194 1.112.287l-.646 2.591 1.558.389.639-2.564c.426.116.839.222 1.243.323l-.637 2.551 1.56.389.645-2.587c2.66.504 4.659.3 5.5-2.105.679-1.936-.033-3.053-1.432-3.782 1.019-.235 1.787-.905 1.991-2.29Zm-3.564 4.997c-.482 1.936-3.742.89-4.8.627l.857-3.433c1.057.264 4.447.786 3.943 2.806Zm.483-5.025c-.44 1.762-3.154.867-4.034.647l.776-3.113c.88.219 3.716.629 3.258 2.466Z"/>
-                                            </svg>
-                                            <div class="text-slate-900"></div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-500">Fati</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-900">ja</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-slate-900"></div>nassima.etudiant@gmail.com
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-emerald-500">M1......</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-emerald-500">IL</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                        <div class="text-red-500">DT</div>
-                                    </td>
-                                    <td class="px-5 py-3 border-b border-slate-200 last:border-none first:pl-3 last:pr-3 last:bg-gradient-to-r last:from-transparent last:to-white last:to-[12px] last:pl-5 last:sticky last:right-0">
-                                      <select class="action-select">
-                                        <option value="en-cours" selected>En cours</option>
-                                        <option value="accepter">Accepter</option>
-                                        <option value="refuser">Refuser</option>
-                                      </select>
-                                    </td>
-
-                                </tr>
-                              
-                                
-                            </tbody>
-                        </table>
-
+    <h2>Réclamations</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>CNE</th>
+                <th>Filière</th>
+                <th>Module</th>
+                <th>Description</th>
+                <th>Pièce Jointe</th>
+                <th>Status</th>
+                <th>Date de Soumission</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if (!empty($reclamations)): ?>
+    <?php foreach ($reclamations as $reclamation): ?>
+        <tr>
+            <td><?= esc($reclamation['first_name']) ?></td>
+            <td><?= esc($reclamation['last_name']) ?></td>
+            <td><?= esc($reclamation['email']) ?></td>
+            <td><?= esc($reclamation['cne']) ?></td>
+            <td><?= esc($reclamation['filiere_name']) ?></td>
+            <td><?= esc($reclamation['module_name']) ?></td>
+            <td><?= esc($reclamation['description']) ?></td>
+            <td>
+    <?php if (!empty($reclamation['attachment'])): ?>
+        <a href="<?= base_url('uploads/reclamations/' . $reclamation['attachment']) ?>" target="_blank">Voir la pièce jointe</a>
+    <?php else: ?>
+        Aucun fichier
+    <?php endif; ?>
+</td>
+            <td><?= esc($reclamation['status']) ?></td>
+            <td><?= esc($reclamation['created_at']) ?></td>
+            <td>
+                <form method="post" action="<?= base_url('reclamation/update/' . $reclamation['id_reclamation']) ?>">
+                    <select name="status" required>
+                        <option value="pending" <?= $reclamation['status'] === 'pending' ? 'selected' : '' ?>>En Attente</option>
+                        <option value="resolved" <?= $reclamation['status'] === 'resolved' ? 'selected' : '' ?>>Résolu</option>
+                        <option value="rejected" <?= $reclamation['status'] === 'rejected' ? 'selected' : '' ?>>Rejeté</option>
+                    </select>
+                    <button type="submit">Mettre à jour</button>
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php else: ?>
+    <tr>
+        <td colspan="11">Aucune réclamation trouvée.</td>
+    </tr>
+<?php endif; ?>
+        </tbody>
+    </table>
+</div>
                     </div>
                 </div>
             </div>
