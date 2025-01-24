@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\NoteModel;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class NoteController extends Controller
 {
@@ -14,27 +15,30 @@ class NoteController extends Controller
     {
         $this->noteModel = new NoteModel();
     }
-    public function showStudentGradesView() 
+    public function showStudentGradesView()
     {
         $session = session();
-        if (!$session->has('user_id')) {
-            return redirect()->to('/login'); // Redirige vers la page de connexion si non connecté
+
+        // Ensure student is logged in
+        if (!$session->get('logged_in') || $session->get('role') !== 'etudiant') {
+            return redirect()->to('/login');
         }
-    
-        $studentId = $session->get('user_id'); // Récupère l'ID de l'étudiant depuis la session
-    
-        // Récupération des notes avec le nom des modules
-        $grades = $this->noteModel
-            ->select('note.grade, module.name as module_name')
-            ->join('module', 'note.id_module = module.id_module')
-            ->where('note.id_user', $studentId)
-            ->findAll();
-    
-        // Récupération des informations de l'étudiant
+
+        // Get student information
+        $studentId = $session->get('user_id');
+        $filiereId = $session->get('id_filiere');
+
+        // Fetch grades and modules
+        $gradesAndModules = $this->noteModel->getGradesAndModulesByFiliere($filiereId, $studentId);
+
+        // Fetch student details
         $userModel = new UserModel();
         $student = $userModel->find($studentId);
-    
-        return view('etudiant', ['grades' => $grades, 'student' => $student]);
+
+        return view('etudiant', [
+            'gradesAndModules' => $gradesAndModules,
+            'student' => $student
+        ]);
     }
     
 
@@ -128,9 +132,11 @@ class NoteController extends Controller
                   }
               }
   
-              return $this->response->setJSON(['success' => 'Notes importées avec succès.']);
-          } catch (\Exception $e) {
-              return $this->response->setJSON(['error' => 'Erreur lors de la lecture du fichier Excel : ' . $e->getMessage()]);
-          }
-      }
+              session()->setFlashdata('success', 'Notes importées avec succès.');
+        return redirect()->back();
+    } catch (\Exception $e) {
+        session()->setFlashdata('error', 'Erreur lors de la lecture du fichier Excel : ' . $e->getMessage());
+        return redirect()->back();
+    }
+}
 }

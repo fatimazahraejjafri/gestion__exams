@@ -46,5 +46,15 @@ public function saveNotesBulk($moduleId, $grades)
     }
 }
 
+public function getGradesAndModulesByFiliere($filiereId, $studentId)
+    {
+        return $this->db->table('module')
+            ->select('module.name as module_name, note.grade')
+            ->join('note', 'note.id_module = module.id_module AND note.id_user = ' . $studentId, 'left') // Left join to include modules without grades
+            ->where('module.id_filiere', $filiereId)
+            ->get()
+            ->getResultArray();
+    }
+
 
 }

@@ -51,6 +51,21 @@
       flex: 1;
       padding: 20px;
     }
+    .alert {
+      color: green;
+      margin: 20px auto;
+      text-align: center;
+      border: 1px solid green;
+      background-color: #d4edda;
+      padding: 10px;
+      border-radius: 5px;
+      width: 50%;
+    }
+    .alert-danger {
+      color: red;
+      border-color: red;
+      background-color: #f8d7da;
+    }
     header {
       background-color: #e3a70f;
       color: white;
@@ -125,6 +140,17 @@
     </aside>
     <!-- Main Content -->
     <main class="main-content">
+    <?php if (session()->getFlashdata('success')): ?>
+          <div class="alert">
+            <?= session()->getFlashdata('success') ?>
+          </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('error')): ?>
+          <div class="alert alert-danger">
+            <?= session()->getFlashdata('error') ?>
+          </div>
+        <?php endif; ?>
       <header>
         <?php if (isset($professor) && $professor): ?>
           <h1>Bienvenue, Professeur <?= esc($professor['first_name']) . ' ' . esc($professor['last_name']) ?></h1>

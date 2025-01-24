@@ -108,7 +108,7 @@ class Login extends Controller
         }
     
         // Pass student information to the view
-        return view('dachboard_etudiant/accueil', ['student' => $student]);
+        return view('accueil', ['student' => $student]);
     }
     
     public function reclamation()
