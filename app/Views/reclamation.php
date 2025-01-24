@@ -14,41 +14,9 @@
             background-color: #f8f9fa;
         }
 
-        .sidebar {
-            height: 100vh;
-            background-color: #212d31;
-            color: white;
-            padding: 20px;
-            position: sticky;
-            top: 0;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin: 15px 0;
-            padding: 12px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .sidebar a:hover {
-            background-color: #343a40;
-            transform: translateX(5px);
-        }
-        
+   
         a.active {
             background-color: #34495e;
-        }
-
-        .contain {
-            margin: 20px auto;
-            background-color: #ffffff;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 20px;
         }
 
         .form h4, .form-headline {
@@ -74,8 +42,8 @@
 
         .form-input {
             width: 100%;
-            padding: 12px 15px;
-            margin: 10px 0;
+            padding: 10px 15px;
+            margin: px 0;
             border: 1px solid #ced4da;
             border-radius: 5px;
             font-size: 16px;
@@ -102,37 +70,72 @@
             color: #ec1c24;
         }
 
-        @media (max-width: 992px) {
-            .sidebar {
-                height: auto;
-                margin-bottom: 20px;
-            }
-        }
+       
 
         .success-message, .error-message {
            margin-bottom: 20px;
         }
 
         .form {
-          margin-top: 20px;
+          margin-top: 0px;
         }
-
+        .navbar {
+      background-color: #e3a70f;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand, .navbar-nav a {
+      color: white;
+    }
+    .navbar-nav a:hover {
+      background-color: #d6930f;
+    }
+    .content {
+      margin-top: 80px; /* Push the content below the navbar */
+      max-width: 800px;
+      width: 100%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    .nav-item{
+        margin-right:5px;
+    }
     </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-2 sidebar">
-            <a href="accueil">Informations sur la Faculté</a>
-            <a href="/notes">Mes Notes</a>
-            <a href="reclamation" class="active">Réclamations</a>
-            <a href="/login/logout">Déconnexion</a>
-        </nav>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top ">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="<?= base_url('images/image1.png'); ?>" alt="student" style="width: 50px; height: 50px; display: block; margin: auto;" />
 
-        <!-- Main Content -->
-        <main class="col-md-10">
-            <!-- Success/Error Messages -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/accueil">Informations sur la Faculté</a>
+          </li>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/notes">Mes Notes</a>
+          </li>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="reclamation">Réclamations</a>
+          </li>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/historique">Historiques Réclamations</a>
+          </li>
+          <li class="nav-item bg-dark text-light rounded-3">
+          <a class="nav-link" href="/login/logout">Déconnexion</a>
+          </li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container content">
+        
             <?php if (session()->getFlashdata('success')): ?>
                 <div style="
                     color: green; 
@@ -160,12 +163,10 @@
                     <?= session()->getFlashdata('error') ?>
                 </div>
             <?php endif; ?>
+            <h4 class="text-center">Ajouter une Réclamation</h4>
 
             <!-- Rest of the Content -->
-            <div class="contain">
     <div class="form">
-        <h4>Réclamation</h4>
-        <h2 class="form-headline">Réclamation sur les notes</h2>
         <form id="submit-form" action="<?= base_url('reclamation/submit') ?>" method="post" enctype="multipart/form-data">
             <!-- Pre-filled Form Inputs -->
             <p>

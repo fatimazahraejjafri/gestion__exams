@@ -90,33 +90,49 @@ body {
       background-color: #495057;
       color: white !important;
     }
+    .nav-item{
+        margin: 5px 5px;
+    }
+    .content {
+      margin-top: 80px; /* Push the content below the navbar */
+      max-width: 1000px;
+      width: 100%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
 </style>
 </head>
 
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Université</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">
+      <img src="<?= base_url('images/image1.png'); ?>" alt="student" style="width: 50px; height: 50px; display: block; margin: auto;" />
+
+      </a>      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
+          <li class="nav-item bg-dark text-light rounded-3">
             <a class="nav-link" href="/accueil">Informations sur la Faculté</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item bg-dark text-light rounded-3">
             <a class="nav-link" href="/notes">Mes Notes</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reclamation">Ajouter réclamations</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="reclamation">Réclamations</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reclamation/historique">Historiques Réclamations</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/historique">Historiques Réclamations</a>
           </li>
-          
-        </ul>
+          <li class="nav-item bg-dark text-light rounded-3">
+          <a class="nav-link" href="/login/logout">Déconnexion</a>
+          </li>
+          </ul>
       </div>
     </div>
   </nav>

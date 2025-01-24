@@ -44,32 +44,49 @@
       height: 200px;
       object-fit: cover;
     }
+    .nav-item{
+        margin: 5px 5px;
+    }
+    .container {
+      margin-top: 80px; /* Push the content below the navbar */
+      width: 100%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+  
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Université</a>
+      <a class="navbar-brand" href="#">
+      <img src="<?= base_url('images/image1.png'); ?>" alt="student" style="width: 50px; height: 50px; display: block; margin: auto;" />
+
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/accueil">Informations sur la Faculté</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="accueil">Informations sur la Faculté</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item bg-dark text-light rounded-3">
             <a class="nav-link" href="/notes">Mes Notes</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reclamation">Ajouter réclamations</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="reclamation">Réclamations</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reclamation/historique">Historiques Réclamations</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/historique">Historiques Réclamations</a>
           </li>
-          
-        </ul>
+          <li class="nav-item bg-dark text-light rounded-3">
+          <a class="nav-link" href="/login/logout">Déconnexion</a>
+          </li>
+          </ul>
       </div>
     </div>
   </nav>
@@ -84,7 +101,7 @@
         <div class="carousel-inner">
           <!-- Premier slide -->
           <div class="carousel-item active">
-            <img src="13.jpg" class="d-block w-100" alt="Faculté 1">
+            <img src="/images/13.jpg" class="d-block w-100" alt="Faculté 1">
             <div class="carousel-caption">
               <h5>+DE 30 ANS D'EXPÉRIENCE</h5>
               <p>Depuis son ouverture en octobre 1984, l'Université Ibn Zohr a accumulé une longue expérience en formation et en recherche scientifique.</p>
@@ -92,7 +109,7 @@
           </div>
           <!-- Deuxième slide -->
           <div class="carousel-item">
-            <img src="15.jpg" class="d-block w-100" alt="Faculté 2">
+            <img src="/images/15.jpg" class="d-block w-100" alt="Faculté 2">
             <div class="carousel-caption">
               <h5>FORMATIONS MODERNES</h5>
               <p>Notre université offre des formations modernes adaptées aux besoins du marché du travail.</p>
@@ -128,7 +145,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="card">
-              <img src="1.jpg" class="card-img-top" alt="Faculté des Sciences">
+              <img src="/images/1.jpg" class="card-img-top" alt="Faculté des Sciences">
               <div class="card-body">
                 <h5 class="card-title">Faculté des Sciences</h5>
                 <p class="card-text">La faculté des sciences propose des formations en biologie, physique, chimie et bien d'autres domaines scientifiques.</p>
@@ -137,7 +154,7 @@
           </div>
           <div class="col-md-4">
             <div class="card">
-              <img src="2.jpg" class="card-img-top" alt="Faculté de Droit">
+              <img src="/images/2.jpg" class="card-img-top" alt="Faculté de Droit">
               <div class="card-body">
                 <h5 class="card-title">Faculté de Droit</h5>
                 <p class="card-text">La faculté de droit forme des étudiants aux carrières juridiques et aux sciences sociales, offrant un enseignement complet en droit public et privé.</p>
@@ -146,7 +163,7 @@
           </div>
           <div class="col-md-4">
             <div class="card">
-              <img src="3.png" class="card-img-top" alt="Faculté de Lettres">
+              <img src="/images/3.png" class="card-img-top" alt="Faculté de Lettres">
               <div class="card-body">
                 <h5 class="card-title">Faculté de Lettres</h5>
                 <p class="card-text">La faculté de lettres propose des formations en littérature, langues et sciences humaines, pour des carrières dans l'éducation et les arts.</p>

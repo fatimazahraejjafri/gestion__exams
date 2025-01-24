@@ -164,28 +164,23 @@ class Login extends Controller
 {
     $session = session();
 
-    // Ensure professor is logged in
     if (!$session->get('user_id') || $session->get('role') !== 'prof') {
         return redirect()->to('/login');
     }
 
-    $professorId = $session->get('user_id'); // Get professor's ID from the session
+    $professorId = $session->get('user_id'); 
 
-    // Fetch reclamations related to the professor
     $reclamationModel = new \App\Models\ReclamationModel();
     $reclamations = $reclamationModel->getReclamationsByProfessorsAndModules($professorId);
 
-    // Store reclamations in session
     $session->set('reclamations', $reclamations);
 
-    // Pass the reclamations to the view
     return view('reclamation_prof', ['reclamations' => $session->get('reclamations')]);
 }
 
 
     public function accueil()
     {
-        
 
         return view('accueil'); 
     }

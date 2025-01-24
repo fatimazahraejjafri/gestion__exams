@@ -63,31 +63,37 @@
       color: #6c757d;
       margin-top: 20px;
     }
+    .nav-item{
+      margin-right: 5px;
+    }
+  
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Université</a>
+    <a class="navbar-brand" href="#">
+      <img src="<?= base_url('images/image1.png'); ?>" alt="student" style="width: 50px; height: 50px; display: block; margin: auto;" />
+
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
+          <li class="nav-item bg-dark text-light rounded-3">
             <a class="nav-link" href="/accueil">Informations sur la Faculté</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="etudiant.html">Mes Notes</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/notes">Mes Notes</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item bg-dark text-light rounded-3">
             <a class="nav-link" href="reclamation">Réclamations</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reclamation/historique">Historiques Réclamations</a>
+          <li class="nav-item bg-dark text-light rounded-3">
+            <a class="nav-link" href="/historique">Historiques Réclamations</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item bg-dark text-light rounded-3">
           <a class="nav-link" href="/login/logout">Déconnexion</a>
           </li>
           </ul>
@@ -101,7 +107,7 @@
     <div class="card">
       <div class="card-body text-center">
         <h5 class="card-title">
-          Bienvenue, <strong><?= esc($student['first_name']); ?></strong>
+          <strong><?= esc($student['first_name']); ?></strong> <strong><?= esc($student['last_name']); ?></strong>
         </h5>
         <p>Voici vos notes pour les matières suivies :</p>
         <table class="table table-bordered">
