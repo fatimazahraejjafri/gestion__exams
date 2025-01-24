@@ -57,14 +57,18 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="voire.html">Informations sur la Faculté</a>
+            <a class="nav-link" href="/accueil">Informations sur la Faculté</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="etudiant.html">Mes Notes</a>
+            <a class="nav-link" href="/notes">Mes Notes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Réclamations</a>
+            <a class="nav-link" href="reclamation">Ajouter réclamations</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reclamation/historique">Historiques Réclamations</a>
+          </li>
+          
         </ul>
       </div>
     </div>

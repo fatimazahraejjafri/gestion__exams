@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ReclamationModel;
+use App\Models\CompteModel;
 use CodeIgniter\Controller;
 
 class ReclamationController extends Controller {
@@ -54,6 +55,31 @@ class ReclamationController extends Controller {
         // If the file doesn't exist, show an error or redirect
         return redirect()->back()->with('error', 'Fichier non trouvé.');
     }
+}
+public function getReclamationsByStudent() {
+    $session = session();
+
+    // Ensure student is logged in
+    if (!$session->get('user_id') || $session->get('role') !== 'etudiant') {
+        return redirect()->to('/login');
+    }
+
+    $studentId = $session->get('user_id'); // Get student's ID from the session
+
+    // Load the UsersModel to fetch the email
+    $usersModel = new CompteModel(); // Replace with the actual model name for your users table
+    $user = $usersModel->find($studentId);
+
+    if (!$user) {
+        return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+    }
+
+    $email = $user['email']; // Retrieve the email from the user's record
+
+    // Fetch reclamations related to the student using their email
+    $reclamations = $this->reclamationModel->where('email', $email)->findAll();
+
+    return view('reclamation_histo', ['reclamations' => $reclamations]);
 }
 
 }

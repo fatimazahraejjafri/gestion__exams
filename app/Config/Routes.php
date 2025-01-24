@@ -33,7 +33,7 @@ $routes->get('login/logout', 'Login::logout');
 
 $routes->get('/notes', 'NoteController::showStudentGradesView');
 
-$routes->get('accueil', 'Login::accueil');
+$routes->get('/accueil', 'Login::accueil');
 
 $routes->post('reclamation/submit', 'StudentReclamationController::submitReclamation');
 $routes->get('reclamation_prof', 'ReclamationController::getReclamationsByProfessorsAndModules');
@@ -43,3 +43,4 @@ $routes->get('reclamation_prof', 'Login::reclamation_prof');
 $routes->get('reclamation/download/(:any)', 'ReclamationController::download/$1');
 $routes->get('reclamation', 'StudentReclamationController::showReclamationForm');
 $routes->get('module/getModulesByFiliere', 'StudentReclamationController::getModulesByFiliere');
+$routes->get('reclamation/historique', 'ReclamationController::getReclamationsByStudent');

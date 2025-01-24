@@ -187,6 +187,6 @@ class Login extends Controller
     {
         
 
-        return view('dachboard_etudiant/accueil'); 
+        return view('accueil'); 
     }
 }

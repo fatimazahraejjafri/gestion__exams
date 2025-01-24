@@ -1,141 +1,133 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord - Notes de l'Étudiant</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            height: 100vh;
-            background-color: #e3a70f;
-            color: white;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord - Notes de l'Étudiant</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .navbar {
+      background-color: #e3a70f;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand, .navbar-nav a {
+      color: white;
+    }
+    .navbar-nav a:hover {
+      background-color: #d6930f;
+    }
+    .content {
+      margin-top: 80px; /* Push the content below the navbar */
+      max-width: 800px;
+      width: 100%;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    .content h1 {
+      font-size: 2.5rem;
+      color: #343a40;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .card {
+      border: none;
+      background-color: #f8f9fa;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    .table {
+      margin-top: 20px;
+    }
+    .table th {
+      background-color: #e3a70f;
+      color: white;
+      border: none;
+    }
+    .table tbody tr:nth-child(odd) {
+      background-color: #f8f9fa;
+    }
+    .table tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-2 sidebar">
-                 <a href="#">Vue d'ensemble</a>
-                <a href="/notes">Mes Notes</a>
-                <a href="#">Réclamations</a>
-                <a href="#">Calendrier</a>
-                <a href="#">Ressources</a>
-            </nav>
-
-            <!-- Main Content -->
-            <main class="col-md-10 content">
-                <h1>Mes Notes</h1>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Bienvenue, <strong>Jean Dupont</strong></h5>
-                        <p>Voici vos notes pour les matières suivies :</p>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Matière</th>
-                                    <th>Note</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mathématiques</td>
-                                    <td>85</td>
-                                </tr>
-                                <tr>
-                                    <td>Physique</td>
-                                    <td>90</td>
-                                </tr>
-                                <tr>
-                                    <td>Chimie</td>
-                                    <td>78</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Calendrier</h5>
-                        <p>Consultez votre emploi du temps et les dates importantes :</p>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Événement</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>10/10/2024</td>
-                                    <td>Examen de Mathématiques</td>
-                                </tr>
-                                <tr>
-                                    <td>15/10/2024</td>
-                                    <td>Projet Physique à remettre</td>
-                                </tr>
-                                <tr>
-                                    <td>20/10/2024</td>
-                                    <td>Laboratoire Chimie</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Ressources</h5>
-                        <p>Accédez à des documents et supports utiles pour vos cours :</p>
-                        <ul>
-                            <li><a href="#" target="_blank">Cours de Mathématiques (PDF)</a></li>
-                            <li><a href="#" target="_blank">Guide du Projet Physique</a></li>
-                            <li><a href="#" target="_blank">Fiches pratiques de Chimie</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </main>
-        </div>
+      <a class="navbar-brand" href="#">Université</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/accueil">Informations sur la Faculté</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="etudiant.html">Mes Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reclamation">Réclamations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reclamation/historique">Historiques Réclamations</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="/login/logout">Déconnexion</a>
+          </li>
+          </ul>
+      </div>
     </div>
+  </nav>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Main Content -->
+  <div class="container content">
+    <h1>Mes Notes</h1>
+    <div class="card">
+      <div class="card-body text-center">
+        <h5 class="card-title">
+          Bienvenue, <strong><?= esc($student['first_name']); ?></strong>
+        </h5>
+        <p>Voici vos notes pour les matières suivies :</p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($grades as $grade): ?>
+              <tr>
+                <td><?= esc($grade['module_name']); ?></td>
+                <td><?= esc($grade['grade']); ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      &copy; <?= date('Y'); ?> Université - Tous droits réservés.
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
